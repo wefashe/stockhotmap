@@ -35,7 +35,7 @@ function calculateFontSize(width, height) {
   
   return 0; // 默认不显示
 }
-const myChart = echarts.init(document.getElementById('treemap'));
+const myChart = echarts.init(document.getElementById('chartd'));
 $.get('static/data/getquotedata.json', function(data) {
     quotetime = data.quotetime
     bk = data.bk    
