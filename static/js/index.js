@@ -2,16 +2,21 @@
 // https://api.codetabs.com/v1/proxy/?quest=https://quote.eastmoney.com/stockhotmap/api/getquotedata
 // https://seep.eu.org/https://quote.eastmoney.com/stockhotmap/api/getquotedata
 
+colors = [
+    "#30cc5a", "#30c558", "#30be56", "#2fb854", "#2fb152",
+    "#2faa51", "#2fa450", "#2f9e4f", "#30974f", "#31904e",
+    "#31894e", "#32844e", "#347d4e", "#35764e", "#366f4e",
+    "#38694f", "#3a614f", "#3b5a50", "#3d5451", "#3f4c53",
+    "#414554", "#4f4554", "#5a4554", "#644553", "#6f4552",
+    "#784551", "#824450", "#8b444e", "#94444d", "#9d434b",
+    "#a5424a", "#ae4248", "#b64146", "#bf4045", "#c73e43",
+    "#ce3d41", "#d73c3f", "#df3a3d", "#e6393b", "#ee373a",
+    "#f63538"
+];
 function getColorByChange(change) {
-    if (change < -4) return '#00d641';    // 小于-4%
-    if (change < -3) return '#1aa448';    // -4%到-3%
-    if (change < -2) return '#0e6f2f';    // -3%到-2%
-    if (change < -1) return '#085421';    // -2%到-1%
-    if (change < 1)  return '#424453';    // -1%到1%
-    if (change < 2)  return '#6d1414';    // 1%到2%
-    if (change < 3)  return '#961010';    // 2%到3%
-    if (change < 4)  return '#be0808';    // 3%到4%
-    return '#e41414';                    // 大于4%
+    return change >= 4 ? colors[40] :          
+           change <= -4 ? colors[0] :          
+           colors[Math.floor((change - -4) * 5)];  
 }
 
 function calculateFontSize(width, height) {
