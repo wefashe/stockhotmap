@@ -14,7 +14,7 @@ function getColorByChange(change) {
     return '#e41414';                    // 大于4%
 }
 const chart = echarts.init(document.getElementById('treemap'));
-$.get('/static/data/getquotedata.json', function(data) {
+$.get('static/data/getquotedata.json', function(data) {
     quotetime = data.quotetime
     bk = data.bk    
     const stockMap = new Map();
