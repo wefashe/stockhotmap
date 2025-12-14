@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=1024">
+        <title>大盘云图 - A股热力图</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <!-- <link rel="stylesheet" href="static/css/lib/w3.css"> -->
+        <link rel="stylesheet" href="/static/css/index.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="tophead">
+                <div class="logo">
+                    <a href=".">大盘云图</a>
+                </div>
+                <div class="topzsc">
+                    <div class="topzs">
+                        <div class="item">
+                            <a href="#">
+                                上证指数
+                                <div>
+                                    <span class="price_up">3889.35</span>
+                                </div>
+                                <div>
+                                    <span class="price_up">16.03</span>
+                                    <span class="price_up">0.41%</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#">
+                                深圳成指
+                                <div>
+                                    <span class="price_up">13258.33</span>
+                                </div>
+                                <div>
+                                    <span class="price_up">110.94</span>
+                                    <span class="price_up">0.84%</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fullscreen">
+                    <span class="currenttime">2025-12-12 21:10</span>
+                    <a href="#" class="fullscreen-btn" id="fullscreen_btn"></a>
+                </div>
+            </div>
+            <div class="mainbody">
+                <div class="leftbar">
+                    <div class="hotmapoption">
+                        <div class="charttype">
+                            <ul>
+                                <li data-value="hsj" class="on">全部A股</li>
+                                <li data-value="sh" class="on">上证A股</li>
+                                <li data-value="sz" class="on">深圳A股</li>
+                                <li data-value="bj" class="on">北证A股</li>
+                                <li data-value="kcb" class="on">科创版</li>
+                                <li data-value="cyb" class="on">创业板</li>
+                                <li data-value="hs300" class="on">沪深300</li>
+                                <li data-value="zz500" class="on">中证500</li>
+                                <li data-value="zz1000" class="on">中证1000</li>
+                            </ul>
+                        </div>
+                        <div class="colortype">
+                            <div class="title">色彩代表</div>
+                            <select>
+                                <option value="zdf">涨跌幅</option>
+                                <option value="zdf_3">3日涨跌幅</option>
+                                <option value="zdf_5">5日涨跌幅</option>
+                                <option value="zdf_10">10日涨跌幅</option>
+                                <option value="zdf_20">20日涨跌幅</option>
+                                <option value="zdf_60">60日涨跌幅</option>
+                                <option value="zdf_nc">年初至今涨跌幅</option>
+                            </select>
+                        </div>
+                        <div class="boxtype">
+                            <div class="title">面积代表</div>
+                            <select>
+                                <option value="ltsz">流通市值</option>
+                                <option value="zsz">总市值</option>
+                                <option value="cje">成交额</option>
+                                <option value="lb">量比</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="quotezdnumbs">
+                        <div class="zdnums">
+                            <span>
+                                <div class="price_up">上涨</div>
+                                <div><span class="price_up">2683</span></div>
+                            </span>
+                            <span>
+                                <div>平盘</div>
+                                <div>149</div>
+                            </span>
+                            <span>
+                                <div class="price_down">下跌</div>
+                                <div><span class="price_down">2612</span></div>
+                            </span>
+                        </div>
+                        <div class="cjec">
+                            <span>
+                                <div>成交额</div>
+                                <div>2.12万亿</div>
+                            </span>
+                            <span>
+                                <div>比昨日<span class="price_up">放量</span></div>
+                                <div class="price_up">2145亿</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mainchart">
+                    <div id="chartd">
+                        <canvas id="treemap" width="1755" height="890" style="left: 0px; top: 0px;"></canvas>
+                    </div>
+                </div>
+                <div class="chartbottom">
+                    <div class="cbl">
+                        <div class="fpbtns">
+                            <ul class="c1">
+                                <li data-value="0930">09:30</li>
+                                <li data-value="1000">10:00</li>
+                                <li data-value="1030">10:30</li>
+                                <li data-value="1100">11:00</li>
+                                <li data-value="1130">11:30</li>
+                                <li data-value="1330">13:30</li>
+                                <li data-value="1400">14:00</li>
+                                <li data-value="1430">14:30</li>
+                                <li data-value="1500">15:00</li>
+                            </ul>                                
+                        </div>
+                    </div>
+                    <div class="cbr">
+                        <div class="chartcolortip">
+                            <ul class="c1">
+                                <li>-4%</li>
+                                <li>-3%</li>
+                                <li>-2%</li>
+                                <li>-1%</li>
+                                <li>0%</li>
+                                <li>1%</li>
+                                <li>2%</li>
+                                <li>3%</li>
+                                <li>4%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/lodash.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/knockout-min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/echarts.min.js"></script>
+        <script type="text/javascript" src="/static/js/index.js"></script>
+    </body>
+</html>
