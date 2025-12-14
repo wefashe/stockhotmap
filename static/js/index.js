@@ -13,7 +13,29 @@ function getColorByChange(change) {
     if (change < 4)  return '#be0808';    // 3%到4%
     return '#e41414';                    // 大于4%
 }
-const chart = echarts.init(document.getElementById('treemap'));
+
+function calculateFontSize(width, height) {
+    console.log(width, height)
+  // 1. 检查最小尺寸 - 太小就不显示文字
+  if (width < 32 || height < 20) return 0;
+  
+  // 2. 直接用 if-else 链实现原始逻辑
+  if (width >= 180 && height >= 120) return 28;
+  if (width >= 160 && height >= 100) return 26;
+  if (width >= 140 && height >= 90) return 24;
+  if (width >= 120 && height >= 80) return 20;
+  if (width >= 100 && height >= 70) return 18;
+  if (width >= 80 && height >= 60) return 16;
+  if (width >= 60 && height >= 50) return 14;
+  if (width >= 50 && height >= 40) return 12;
+  if (width >= 45 && height >= 30) return 11;
+  if (width >= 40 && height >= 25) return 10;
+  if (width >= 35 && height >= 22) return 9;
+  if (width >= 32 && height >= 20) return 8;
+  
+  return 0; // 默认不显示
+}
+const myChart = echarts.init(document.getElementById('treemap'));
 $.get('static/data/getquotedata.json', function(data) {
     quotetime = data.quotetime
     bk = data.bk    
@@ -53,7 +75,7 @@ $.get('static/data/getquotedata.json', function(data) {
             return sector;
         });
     console.log(treeData)
-    chart.setOption({
+    myChart.setOption({
         series: [{ 
             type: 'treemap',
             left:'left',
@@ -86,6 +108,11 @@ $.get('static/data/getquotedata.json', function(data) {
                     },
                 },               
             ],
+            labelLayout:function(params){
+                return {
+                    fontSize: calculateFontSize(params.rect.width, params.rect.height)
+                };
+            }, 
             breadcrumb: {
                 show: false
             },
@@ -100,7 +127,9 @@ $.get('static/data/getquotedata.json', function(data) {
     });
 
 });
-
+window.addEventListener('resize', function() {
+    myChart.resize();
+});
 
 
 
