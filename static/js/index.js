@@ -41,7 +41,7 @@ function calculateFontSize(width, height, scaleFactor = 1) {
     return size * scaleFactor;
 }
 const myChart = echarts.init(document.getElementById('chartd'));
-$.get('static/data/getquotedata.json', function(data) {
+$.get('https://api.codetabs.com/v1/proxy/?quest=https://quote.eastmoney.com/stockhotmap/api/getquotedata', function(data) {
     quotetime = data.quotetime
     bk = data.bk    
     const stockMap = new Map();
@@ -49,23 +49,31 @@ $.get('static/data/getquotedata.json', function(data) {
     .filter(item => item?.includes('|')) 
     .map(item => item.split('|'))
     .forEach(parts => {
-        const [bk_index, stock_name] = parts;
+        const [bk_code, stock_name] = parts;
+        const bk_name = bk[parseInt(bk_code)].split('|')[0]
+        const bk_order = parseInt(bk_code)
+
         const boxt_value = parseFloat(parts[16]) || 0
         const color_value = parseFloat(parts[6]) || 0
 
         const value = Math.abs(boxt_value)
         const change =  (color_value / 100).toFixed(2)
-        if (!stockMap.has(bk_index)) {
-            stockMap.set(bk_index, {
-                name: bk[parseInt(bk_index)].split('|')[0],
+        var name = stock_name
+        if (parts[6] != '-'){
+            name += '\n' + change + '%'
+        }
+
+        if (!stockMap.has(bk_code)) {
+            stockMap.set(bk_code, {
+                name: bk_name,
                 value: 0,
-                order: parseInt(bk_index),
+                order: bk_order,
                 children: []
             });
         }
-        let stockData = stockMap.get(bk_index);
+        let stockData = stockMap.get(bk_code);
         stockData.children.push({
-            name: `${stock_name}\n${change}%`,
+            name: name,
             value: value,
             itemStyle: {
                 color: getColorByChange(change)
